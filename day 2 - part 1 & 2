@@ -1,0 +1,102 @@
+i = open("C:/Projecten/2018d2.txt", "r")
+data = i.read().splitlines()
+
+unsortedletters = []
+
+sortedletters = []
+for e in range(len(data)):
+    sortedletters.append(sorted(data[e]))
+
+for e in range(len(data)):
+    unsortedletters.append(data[e])
+    
+
+tot = ""
+totaal = []
+for e in sortedletters:
+    for f in e:
+        tot += f
+    totaal.append(tot)
+    tot = ""
+
+tot = ""
+totaal2 = []
+for e in unsortedletters:
+    for f in e:
+        tot += f
+    totaal2.append(tot)
+    tot = ""
+
+totaal2.sort()
+
+
+doubles = []
+triples = []
+counter = 0
+for e in totaal:
+    for f in range(len(totaal[0])):
+        if counter == 0:
+            if f == 0:
+                if e[f] == e[f+1] and e[f] != e[f+2]:
+                    doubles.append(e)
+                    counter += 1
+            elif f > 0 and f < (len(totaal[0]) -1) -1:
+                if e[f] == e[f+1] and e[f] != e[f+2] and e[f] != e[f-1]:
+                    doubles.append(e)
+                    counter += 1
+            elif f == (len(totaal[0]) -1) -1:
+                if e[f] == e[f+1] and e[f] != e[f-1]:
+                    doubles.append(e)
+                    counter += 1
+    counter = 0
+
+for e in totaal:
+    for f in range(len(totaal[0])):
+        if counter == 0:
+            if f == 0:
+                if e[f] == e[f+1] and e[f] == e[f+2] and e[f] != e[f+3]:
+                    triples.append(e)
+                    counter += 1
+            elif f > 0 and f < (len(totaal[0]) -1) -2:
+                if e[f] == e[f+1] and e[f] == e[f+2] and e[f] != e[f+3] and e[f] != e[f-1]:
+                    triples.append(e)
+                    counter += 1
+            elif f == (len(totaal[0]) -1) -2:
+                if e[f] == e[f+1] and e[f] == e[f+2] and e[f] != e[f-1]:
+                    triples.append(e)
+                    counter += 1
+    counter = 0
+    
+#part 1:
+print(len(doubles) * len(triples))
+#6200
+
+
+tott = ""
+tott2 = ""
+totaalwel = 0
+counter = 0
+for e in range(len(totaal2)-1):
+    for f in range(len(totaal2[0])):
+        if counter < 2:
+            if totaal2[e][f] == totaal2[e+1][f]:
+                totaalwel += 1
+            elif totaal2[e][f] != totaal2[e+1][f]:
+                counter += 1
+    if totaalwel == 25:
+        tott = totaal2[e]
+        tott2 = totaal2[e+1]
+    totaalwel = 0
+    counter = 0
+    x = 0
+
+
+antwoord = ""                     
+for e in range(len(tott)):
+    if tott[e] == tott2[e]:
+        antwoord += tott[e]
+
+#part 2:
+print(antwoord)
+#xpysnnkqrbuhefmcajodplyzw
+
