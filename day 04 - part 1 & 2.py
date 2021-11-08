@@ -17,6 +17,6 @@ with open("2018day4.txt", 'r') as file:
                 guards[guard].append(int(str(sleep_date).split(':')[1]))
                 sleep_date += timedelta(minutes=1)
     mx = max(guards.items(), key = lambda x: len(x[1]))
-    print(mx[0] * sorted(mx[1], key = lambda x: mx[1].count(x))[-1])
+    print(mx[0] * max(mx[1], key = lambda x: mx[1].count(x)))
     nmx = max(guards.items(), key = lambda x: max(x[1].count(i) for i in range(60)))
     print(nmx[0] * max(nmx[1], key = lambda x: nmx[1].count(x)))
