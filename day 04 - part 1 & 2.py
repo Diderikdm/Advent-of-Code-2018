@@ -7,7 +7,6 @@ with open("2018day4.txt", 'r') as file:
     for k,v in sorted(data.items()):
         if 'Guard' in v:
             guard = int(v.split(' ')[1].strip('#'))
-            guard_date = datetime.strptime(k, '%Y-%m-%d %H:%M')
             if guard not in guards:
                 guards[guard] = []
         elif 'falls' in v:
