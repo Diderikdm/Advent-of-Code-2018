@@ -9,7 +9,8 @@ def find(data):
 with open("2018day5.txt", 'r') as file:
     data = file.read()
     calc = lambda x, y: abs(ord(x) - ord(y)) - 32 == 0
-    print(len(find(data)))
+    data = find(data)
+    print(len(data))
     letters = {}
     for x in range(ord('a'), ord('z') + 1):
         temp = data.replace(chr(x), '').replace(chr(x - 32), '')
