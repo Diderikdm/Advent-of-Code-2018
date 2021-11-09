@@ -9,7 +9,7 @@ with open("2018day6.txt", 'r') as file:
         edges.add(max(data, key = lambda x: abs(offset_x * 1000000 + x[0]) + abs(offset_y * 1000000 + x[1])))
     valids = 0
     for x in range(min_x, max_x+1):
-        for y in range(min_y, max_y):
+        for y in range(min_y, max_y+1):
             if sum(abs(z[0] - x) + abs(z[1] - y) for z in data) < 10000:
                 valids += 1
             lst = sorted(data, key = lambda z: abs(z[0] - x) + abs(z[1] - y))
