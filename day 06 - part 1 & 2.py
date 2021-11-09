@@ -10,10 +10,10 @@ with open("2018day6.txt", 'r') as file:
     valids = 0
     for x in range(min_x, max_x+1):
         for y in range(min_y, max_y+1):
-            if sum(abs(z[0] - x) + abs(z[1] - y) for z in data) < 10000:
-                valids += 1
             lst = sorted(data, key = lambda z: abs(z[0] - x) + abs(z[1] - y))
             if abs(x - lst[1][0]) + abs(y - lst[1][1]) != abs(x - lst[0][0]) + abs(y - lst[0][1]) and lst[0] not in edges:
                 bests[lst[0]].append((x,y))
+            if sum(abs(z[0] - x) + abs(z[1] - y) for z in data) < 10000:
+                valids += 1
     print(len(max(bests.values(), key = lambda x: len(x))))
     print(valids)
