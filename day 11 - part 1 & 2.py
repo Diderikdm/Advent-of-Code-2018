@@ -3,7 +3,6 @@ from itertools import combinations
 data = 18
 combs = [x for x in list(set(combinations([-1,0,1]*2, 2)))]
 grid = [[int(next(iter(x for x in str((((x + 10) * y) + data) * (x + 10))[-3:-2]), '0')) - 5 for x in range(0,301)] for y in range(0,301)]
-print(len(grid))
 adj = lambda x,y : sum(grid[y+a][x+b] for a,b in combs)
 bests = {(x,y) : adj(x,y) for x in range(1,299) for y in range(1,299)}
 print(','.join([str(k-1) for k in max(bests.items(), key = lambda x: x[1])[0]]))
