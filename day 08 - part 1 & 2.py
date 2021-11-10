@@ -8,7 +8,7 @@ def calc(data, index = 0):
             child_value, index = calc(data, index)
             child_result += [child_value]
         for i in data[index : index + metadata]:
-            child_values += child_result[i - 1 : i][0] if child_result[i - 1 : i] else 0
+            child_values += (child_result[i - 1 : i] or [0])[0]
     else:
         child_values = sum(data[index : index + metadata])
     metadatas.append(sum(data[index : index + metadata]))
