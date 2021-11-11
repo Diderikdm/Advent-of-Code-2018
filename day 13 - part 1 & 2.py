@@ -3,18 +3,12 @@ with open("2018 day13.txt", 'r') as file:
     grid = {}
     carts = {}
     cs = '<>^v'
-    nexts = {'^' : lambda x,y : (x,y-1),
-             'v' : lambda x,y : (x,y+1),
-             '<' : lambda x,y : (x-1,y),
-             '>' : lambda x,y : (x+1,y)}
-    dirs = [{'^' : '<', '<' : 'v', 'v' : '>', '>' : '^'},
-            {'^' : '^', '<' : '<', 'v' : 'v', '>' : '>'},
-            {'^' : '>', '<' : '^', 'v' : '<', '>' : 'v'}]
-    corners = {'\\' : {'^' : '<', '<' : '^', '>' : 'v', 'v': '>'},
-                '/' : {'^' : '>', '>': '^', '<' : 'v', 'v' : '<'}}
+    nexts = {'^' : lambda x,y : (x,y-1), 'v' : lambda x,y : (x,y+1), '<' : lambda x,y : (x-1,y), '>' : lambda x,y : (x+1,y)}
+    dirs = [{'^' : '<', '<' : 'v', 'v' : '>', '>' : '^'}, {'^' : '^', '<' : '<', 'v' : 'v', '>' : '>'}, {'^' : '>', '<' : '^', 'v' : '<', '>' : 'v'}]
+    corners = {'\\' : {'^' : '<', '<' : '^', '>' : 'v', 'v': '>'}, '/' : {'^' : '>', '>': '^', '<' : 'v', 'v' : '<'}}
     for y, row in enumerate(data):
         for x, what in enumerate(row):
-            grid[(x,y)] = what if what not in cs else '.'
+            grid[(x,y)] = what if what not in cs else ''
             if what in cs:
                 carts[(x,y)] = {'Cart' : what, 'Dir' : 0}
     crashes = set()
@@ -40,6 +34,5 @@ with open("2018 day13.txt", 'r') as file:
                 next_carts.pop(x)
             crashes = set()
             carts = next_carts
-            continue
     print(p1)
     print(','.join([str(x) for x in next(iter(carts))]))
