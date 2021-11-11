@@ -11,9 +11,9 @@ with open("2018 day13.txt", 'r') as file:
             grid[(x,y)] = what if what not in cs else ''
             if what in cs:
                 carts[(x,y)] = {'Cart' : what, 'Dir' : 0}
-    crashes = set()
     p1 = None
     while len(carts) > 1:
+        crashes = set()
         next_carts = {}
         for k,v in sorted(carts.items()):
             nxt = nexts[v['Cart']](*k)
