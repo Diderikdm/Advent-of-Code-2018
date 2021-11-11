@@ -29,10 +29,9 @@ with open("2018 day13.txt", 'r') as file:
                 crash = next(iter(x for x in [k, nxt] if x in next_carts))
                 p1 = p1 or ','.join([str(x) for x in crash])
                 crashes.add(crash)
-        else:
-            for x in crashes:
-                next_carts.pop(x)
-            crashes = set()
-            carts = next_carts
+        for x in crashes:
+            next_carts.pop(x)
+        crashes = set()
+        carts = next_carts
     print(p1)
     print(','.join([str(x) for x in next(iter(carts))]))
