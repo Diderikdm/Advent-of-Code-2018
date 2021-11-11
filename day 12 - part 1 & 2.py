@@ -6,7 +6,7 @@ with open("2018day12.txt", 'r') as file:
     keys = {x.split(' => ')[0] : x.split(' => ')[1] for x in data[2:]}
     sums = []
     i = 0
-    while not sums[10:] or not all(sums[x] - sums[x-1] == sums[x-1] - sums[x-2] for x in range(-1, -6, -1)):
+    while not sums[20:] or not all(sums[x] - sums[x-1] == sums[x-1] - sums[x-2] for x in range(-1, -6, -1)):
         i += 1
         mn = next(iter(x for x in range(min(states), max(states) + 1) if states[x] == '#'))
         mx = next(iter(x for x in range(max(states), min(states) - 1, -1) if states[x] == '#'))
