@@ -16,4 +16,4 @@ with open("2018day12.txt", 'r') as file:
         states.update(new_states)
         sums.append(sum(k for k,v in states.items() if v == '#'))
     print(sums[19])
-    print(sums[i-1] + (sums[i-1] - sums[i-2]) * (50000000000 - i))
+    print(sums[-1] + (sums[-1] - sums[-2]) * (50000000000 - i))
