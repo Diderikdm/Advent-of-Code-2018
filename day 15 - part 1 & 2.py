@@ -12,8 +12,8 @@ def __print(e, i):
 
 def find_fighters(char, info, chars):
     y, x = char
-    return next(iter(sorted([(b,a) for a,b in ((x,y-1), (x-1,y), (x+1,y), (x,y+1)) if (b,a) in chars and chars[(b,a)][0] == ('E' if info[0] == 'G' else 'G')], 
-                            key = lambda z: chars[z][1])), None)
+    return next(iter(sorted([(b,a) for a,b in ((x,y-1), (x-1,y), (x+1,y), (x,y+1)) if (b,a) in chars and chars[(b,a)][0] == ('E' if info[0] == 'G' else 'G')],
+                            key = lambda z: (chars[z][1], z))), None)
 
 
 def find_goals(grid, char_to_find):
@@ -96,4 +96,3 @@ with open("2018day15.txt", 'r') as file:
         if len([k for k,v in chars.items() if v[0] == 'E']) == ''.join(data).count('E'):
             print(i * sum([x[1] for x in chars.values()]))
             break
-           
