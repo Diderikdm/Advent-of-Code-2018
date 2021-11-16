@@ -12,25 +12,20 @@ def __print(e, i):
 
 def find_fighters(char, info, chars):
     y, x = char
-    return next(iter(sorted([(b,a) for a,b in ((x,y-1), (x-1,y), (x+1,y), (x,y+1)) if (b,a) in chars and chars[(b,a)][0] == ('E' if info[0] == 'G' else 'G')], 
-                            key = lambda z: chars[z][1])), None)
+    return next(iter(sorted([(b,a) for a,b in ((x,y-1), (x-1,y), (x+1,y), (x,y+1)) if (b,a) in chars and chars[(b,a)][0] == ('E' if info[0] == 'G' else 'G')], key = lambda z: chars[z][1])), None)
 
 
 def find_goals(grid, char_to_find):
     goals = set()
-    stuck = set()
     for coord, what in filter(lambda x: x[1][0] == char_to_find, grid.items()):
         y, x = coord
         for a, b in ((x,y-1), (x-1,y), (x+1,y), (x,y+1)):
             if grid[(b,a)] == '.':
                 goals.add((b,a))
-            else:
-                stuck.add((b,a))
-    
-    return goals, stuck
+    return goals
     
 
-def find_route(grid, start, info, goals, stuck, chars):
+def find_route(grid, start, info, goals, chars):
     for char in chars:
         if char != start:
             grid[char] = '#'
@@ -71,8 +66,8 @@ with open("2018day15.txt", 'r') as file:
                     break
                 fighter = find_fighters(char, info, chars)
                 if not fighter:
-                    goals, stuck = find_goals(grid, 'E' if info[0] == 'G' else 'G')
-                    paths = find_route({k:v for k,v in grid.items()}, char, info, goals, stuck, chars)
+                    goals = find_goals(grid, 'E' if info[0] == 'G' else 'G')
+                    paths = find_route({k:v for k,v in grid.items()}, char, info, goals, chars)
                     if paths:
                         path = next(iter(sorted(paths.items(), key = lambda x: (len(x[1]), x[1][-1]))), None)
                         if path:
@@ -100,3 +95,4 @@ with open("2018day15.txt", 'r') as file:
         if len([k for k,v in chars.items() if v[0] == 'E']) == ''.join(data).count('E'):
             print(i * sum([x[1] for x in chars.values()]))
             break
+           
