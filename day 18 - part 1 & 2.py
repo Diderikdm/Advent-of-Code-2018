@@ -18,7 +18,6 @@ with open("2018day18.txt", 'r') as file:
                 else:
                     new_grid[k] = '|'
             else:
-                
                 ad = [grid[x] for x in adj(*k)]
                 if '|' in ad and '#' in ad:
                     new_grid[k] = '#'
@@ -30,9 +29,9 @@ with open("2018day18.txt", 'r') as file:
             print(score)
         if score in scores:
             prev = scores[::-1].index(score)
-            if all([scores[x] == scores[x-prev-1] for x in range(-prev-1,0)]):
+            if all(scores[x] == scores[x-prev-1] for x in range(-prev-1,0)):
                 res = scores[-prev-1:]
                 break
         scores.append(score)
-        i+=1 
+        i+=1
     print(res[((1000000000-i) % len(res))])
