@@ -21,18 +21,16 @@ with open("2018day19.txt", 'r') as file:
         'eqrr' : lambda b, o, a: (1 if b[o[1]] == b[o[2]] else 0)
         }
     ln = len(instructions)
-    registers = [0, 0, 0, 0, 0, 0]
-    while registers[ip] < ln:
-        ins = instructions[registers[ip]]
-        registers[ins[3]] = ops[ins[0]](registers, ins, None)
-        registers[ip] += 1
-    print(registers[0])
-    registers = [1, 0, 0, 0, 0, 0]
-    while registers[ip] < ln:
-        ins = instructions[registers[ip]]
-        registers[ins[3]] = ops[ins[0]](registers, ins, None)
-        registers[ip] += 1
-        if 2 < registers[ip] < 10:
-            mx = max(registers)
-            break
-    print(sum([x for x in range(1, mx+1) if not mx%x]))
+    p2 = False
+    for registers in [[0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0]]:
+        while registers[ip] < ln:
+            ins = instructions[registers[ip]]
+            registers[ins[3]] = ops[ins[0]](registers, ins, None)
+            registers[ip] += 1
+            if p2 and 2 < registers[ip] < 10:
+                mx = max(registers)
+                print(sum([x for x in range(1, mx+1) if not mx%x]))
+                break
+        if not p2:
+            print(registers[0])
+        p2 = True
