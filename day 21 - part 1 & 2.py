@@ -20,7 +20,7 @@ with open("2018 day21.txt", 'r') as file:
         'eqri' : lambda b, o, a: (1 if b[o[1]] == o[2] else 0),
         'eqrr' : lambda b, o, a: (1 if b[o[1]] == b[o[2]] else 0)
         }
-    seen = set()
+    prev = set()
     b8 = 2 ** 8
     b16 = 2 ** 16
     b24 = 2 ** 24
@@ -34,14 +34,13 @@ with open("2018 day21.txt", 'r') as file:
             i = (((i + (trial & (b8 - 1))) & (b24 - 1)) * y) & (b24 - 1)
             if b8 > trial:
                 p1 = p1 or i
-                if i not in seen:
-                    seen.add(i)
-                    temp = i
-                    break
-                else:
+                if i in prev:
                     p2 = temp
-                    break   
+                    print(p1)
+                    print(p2)
+                    break 
+                prev.add(i)
+                temp = i
+                break
             else:
                 trial //= b8
-    print(p1)
-    print(p2)
