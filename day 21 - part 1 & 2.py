@@ -36,11 +36,11 @@ with open("2018 day21.txt", 'r') as file:
                 p1 = p1 or i
                 if i in prev:
                     p2 = temp
-                    print(p1)
-                    print(p2)
                     break 
                 prev.add(i)
                 temp = i
                 break
             else:
                 trial //= b8
+    print(p1)
+    print(p2)
