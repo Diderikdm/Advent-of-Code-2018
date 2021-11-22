@@ -6,14 +6,15 @@ def find_routes(start, target, steps, best):
         if (x,y,tool) in best and best[(x,y,tool)] <= steps:
             continue
         best[(x,y,tool)] = min(best[(x,y,tool)] if (x,y,tool) in best else steps, steps)
+        if (x,y) == target and tool == 1:
+            return best[(x,y,tool)]
         for a, b in ((x,y+1), (x-1,y), (x+1,y), (x,y-1)):
             if (a,b) in grid:
                 if grid[(a,b)] in tools[tool]:
                     q.append((steps + 1, a, b, tool))
                 else:
                     for z in [w for w in [0,1,2] if w != tool and grid[(x,y)] in tools[w]]:
-                        q.append((steps + 7, a, b, z))               
-    return best[(target[0], target[1], 1)] - 7 + 1
+                        q.append((steps + 8, a, b, z))               
 
 
 def calculate_type(current, depth):
@@ -37,8 +38,8 @@ with open("2018day22.txt", 'r') as file:
     grid = {}
     geoi = {}
     erol = {}
-    for y in range(target[1] * 2):
-        for x in range(target[0] * 2):
+    for y in range(target[1] * 5):
+        for x in range(target[0] * 5):
             grid[(x,y)] = calculate_type((x,y), depth)
     print(sum([v for k,v in grid.items() if k[0] <= target[0] and k[1] <= target[1]]))
     current = (0,0)
