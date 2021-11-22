@@ -1,0 +1,68 @@
+from collections import deque
+
+def find_routes(start, tool, target, steps, paths, best):
+    q = deque([[[start], steps]])
+    prev = set([start])
+    steps = 0
+    while q:
+        path, steps = q.popleft()
+        x,y = path[-1]
+        if (x,y) not in paths:
+            paths[(x,y)] = path[:]
+            if (x,y) not in best or best[(x,y)] >= steps:           
+                best[(x,y)] = steps
+        for a, b in ((x,y-1), (x-1,y), (x+1,y), (x,y+1)):
+            if (a,b) in grid and (a,b) not in prev and grid[(a,b)] in tools[tool]:
+                q.append([path + [(a,b)], steps + 1])
+                prev.add((a,b))          
+    end, path = min(paths.items(), key = lambda x: abs(x[0][0] - target[0]) + abs(x[0][1] - target[1]))
+    return end, path[1:], best[end]
+
+
+def explore(instructions, target, current_tool = None):
+    while instructions:
+        tool, current, steps = instructions.popleft()
+        tool = next(iter(x not in tools[tool] for x in [0,1,2]))
+        end, t, steps = find_routes(current, tool, target, steps, {}, {})
+        if end != target:
+            instructions.append([tool, end, steps + 7])
+        else:
+            if grid[end] not in tools[tool]:
+                steps += 7
+            if end not in bests or bests[end] > steps:
+                bests[end] = steps
+        print(end, t, steps)
+
+
+def calculate_type(current, depth):
+    x,y = current
+    if current in [(0,0), target]:
+        geoi[current] = 0
+    elif y == 0:
+        geoi[current] = x * 16807
+    elif x == 0:
+        geoi[current] = y * 48271
+    else:
+        geoi[current] = erol[(x-1,y)] * erol[(x,y-1)]
+    erol[current] = (geoi[current] + depth) % 20183
+    return erol[current] % 3
+     
+        
+
+with open("2018 day22.txt", 'r') as file:
+    data = [x.split()[1] for x in file.read().splitlines()]
+    depth = int(data[0])
+    target = tuple([int(x) for x in data[1].split(',')])
+    grid = {}
+    geoi = {}
+    erol = {}
+    for y in range(target[1] * 10):
+        for x in range(target[0] * 10):
+            grid[(x,y)] = calculate_type((x,y), depth)
+    print(sum([v for k,v in grid.items() if k[0] <= target[0] and k[1] <= target[1]]))
+    current = (0,0)
+    bests = {}
+    tools = {0 : [1,2], 1 : [0,2], 2 : [0,1]}
+    explore(deque([(0, (0,0), 0), (1, (0,0), 0), (2, (0,0), 0)]), target)
+    print(bests)
+    
